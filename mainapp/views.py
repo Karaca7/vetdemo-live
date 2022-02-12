@@ -20,7 +20,7 @@ def loginer(request):
        
         if user is not None:
             login(request,user)
-            print("is login")
+            
             return redirect("indexpage")
         else:
             return render(request,"mainapp/user/login.html",{"warring":"true"})

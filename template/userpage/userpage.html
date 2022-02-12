@@ -13,5 +13,13 @@
   </head>
   <body>
     <h1>User Page</h1>
+    {% if user.is_authenticated %}
+    <a href="{% url 'indexpage' %}">Main Page</a>
+
+    <hr />
+    <br />
+    <a href="{% url 'addpet' %}">Add Pet</a>
+    <br />
+    {% endif %}
   </body>
 </html>

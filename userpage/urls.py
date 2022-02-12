@@ -6,6 +6,9 @@ from userpage import views
 
 urlpatterns = [
         path("",views.Userp,name="main"),
+        path("addpet/",views.Addpet,name="addpet"),
 
     
+    
 ]
+    
