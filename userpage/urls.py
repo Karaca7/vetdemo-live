@@ -8,6 +8,7 @@ urlpatterns = [
         path("",views.Userp,name="main"),
         path("addpet/",views.Addpet,name="addpet"),
         path("addpetowner/",views.AddPetOwner,name="addpetowner"),
+        path("updatepet/<int:id>",views.UpdatePet,name="updatepet"),
 
     
     

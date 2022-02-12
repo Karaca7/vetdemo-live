@@ -112,3 +112,22 @@ def AddPetOwner(request):
 
 
 
+
+
+def UpdatePet(request,id):
+
+    pet=Pet.objects.get(pk=id)
+
+    form=PetForm(instance=pet)
+    if request.method=="POST":
+        pet=Pet.objects.get(pk=id)
+        pet.PetName=request.POST.get("PetName")
+        pet.PetAge=request.POST.get("PetAge")
+        pet.PetType=request.POST.get("PetType")
+        changedPetowner=PetOwner.objects.get(pk=request.POST.get("PetO")) 
+        pet.PetO=changedPetowner
+        pet.save()
+        return redirect("main")     
+
+
+    return render(request,"userpage/updatepet.html",{"form":form})

@@ -53,7 +53,11 @@
     </form>
 
     {% for i in context2 %}
-    <p>{{i}}{{i.PetAge}}{{i.PetO}} {{i.PetName}} update {{i.PetName}} delete</p>
+    <p>
+      {{i}}{{i.PetAge}}{{i.PetO}} {{i.PetName}}
+      <a href="{% url 'updatepet' i.id %}">{{i.PetName}} update</a>
+      {{i.PetName}} delete
+    </p>
     {% endfor %}
     <br />
     {% if warring %}
