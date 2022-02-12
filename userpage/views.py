@@ -8,7 +8,6 @@ from userpage.models import Pet,PetOwner
 # Create your views here.
 
 
-
 def Userp(request):
     if request.user.is_authenticated:
    
@@ -43,9 +42,36 @@ def Userp(request):
                  except:
                     return render(request,"userpage/userpage.html",{"context":context,})
 
+                 print(pets)
+
+           
+           
+
+            # print(optionss)
+            # try:
+            #     #if bloğu ile selected koyup bir owner arama bir de pet arama ile ayrılacak
+
+            #     # petowner=PetOwner.objects.filter(pet__PetName=value,Name=value2)#this isss join python magic spesific search
+    
+            #     if optionss=="owner":
+
+            #         print(1)
+            #         search=PetOwner.objects.filter(Name=value2)
+            #     else:
+            #         print(2)
+            #         search=Pet.objects.filter(PetName=value)
+            #         return render(request,"userpage/userpage.html",{"context":context,"context2":search})
+            
+            # except:
+            #     return render(request,"userpage/userpage.html",{"context":context,"context2":"there is no such content"})
+
     else:
          return redirect("indexpage")
     return render(request,"userpage/userpage.html",{"context":context})
+   
+    
+    
+    
 
 
 
