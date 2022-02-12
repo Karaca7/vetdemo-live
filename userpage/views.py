@@ -4,3 +4,8 @@ from django.shortcuts import render
 def Userp(request):
 
         return render(request,"userpage/userpage.html")
+
+
+
+
+
