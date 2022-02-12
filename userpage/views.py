@@ -67,6 +67,22 @@ def Addpet(request):
    
     
     
+
+
+def AddPetOwner(request):
+    form=PetOwnerForm()
     
+    if(request.method=="POST"):
+        form=PetOwnerForm(request.POST)
+        owner=form.save(commit=False)
+        owner.Vet=request.user
+        owner.save()
+
+        return redirect("main")  
+         
+         
+           
+    return render(request,"userpage/addpetowner.html",{"FORM":form})
+
 
 
