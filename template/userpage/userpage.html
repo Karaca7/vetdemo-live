@@ -1,85 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <script
-      src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
-      integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
-      crossorigin="anonymous"
-    ></script>
-  </head>
-  <body>
-    <h1>User Page</h1>
-    {% if user.is_authenticated %}
-    <a href="{% url 'indexpage' %}">Main Page</a>
-    <br />
-    <a href="{% url 'addpet' %}">Add Pet</a>
-    <br />
-    <a href="{% url 'addpetowner' %}">Add Owner</a>
+{% extends "template.html" %} {% block content %}
+<h1>User Page</h1>
+{% if user.is_authenticated %}
+<a href="{% url 'indexpage' %}">Main Page</a>
+<br />
+<a href="{% url 'addpet' %}">Add Pet</a>
+<br />
+<a href="{% url 'addpetowner' %}">Add Owner</a>
 
-    <hr />
-    <button id="owner">Owner search</button>
-    <button id="pet">Pet search</button>
+<hr />
+<button id="owner">Owner search</button>
+<button id="pet">Pet search</button>
 
-    <form
-      action=""
-      method="post"
-      style="visibility: hidden"
-      name="petform"
-      id="petform"
-    >
-      {% csrf_token %}
+<form
+  action=""
+  method="post"
+  style="visibility: hidden"
+  name="petform"
+  id="petform"
+>
+  {% csrf_token %}
 
-      <input type="text" name="petname" />
+  <input type="text" name="petname" />
 
-      <input type="submit" value="tıkla" />
-    </form>
+  <input type="submit" value="tıkla" />
+</form>
 
-    <form
-      action=""
-      method="post"
-      style="visibility: hidden"
-      name="petownerform"
-      id="petownerform"
-    >
-      {% csrf_token %}
+<form
+  action=""
+  method="post"
+  style="visibility: hidden"
+  name="petownerform"
+  id="petownerform"
+>
+  {% csrf_token %}
 
-      <input type="text" name="petowenname" />
+  <input type="text" name="petowenname" />
 
-      <input type="submit" value="tıkla" />
-    </form>
+  <input type="submit" value="tıkla" />
+</form>
 
-    {% for i in context2 %}
-    <p>
-      {{i}}{{i.PetAge}}{{i.PetO}} {{i.PetName}}
-      <a href="{% url 'updatepet' i.id %}">{{i.PetName}} update</a>
-      <a href="{% url 'deletepet' i.id %}">{{i.PetName}} delete</a>
-    </p>
-    {% endfor %}
-    <br />
-    {% if warring %}
+{% for i in context2 %}
+<p>
+  {{i}}{{i.PetAge}}{{i.PetO}} {{i.PetName}}
+  <a href="{% url 'updatepet' i.id %}">{{i.PetName}} update</a>
+  <a href="{% url 'deletepet' i.id %}">{{i.PetName}} delete</a>
+</p>
+{% endfor %}
+<br />
+{% if warring %}
 
-    <p>not found</p>
-    {% endif%}
-    <script>
-      $("document").ready(function () {
-        $("#owner").click(function () {
-          $("#petownerform").css("visibility", "visible");
-          $("#petform").css("visibility", "hidden");
+<p>not found</p>
+{% endif%}
+<script>
+  $("document").ready(function () {
+    $("#owner").click(function () {
+      $("#petownerform").css("visibility", "visible");
+      $("#petform").css("visibility", "hidden");
 
-          console.log("owner!!");
-        });
+      console.log("owner!!");
+    });
 
-        $("#pet").click(function () {
-          $("#petform").css("visibility", "visible");
-          $("#petownerform").css("visibility", "hidden");
-          console.log("pet!!");
-        });
-      });
-    </script>
-    {% endif %}
-  </body>
-</html>
+    $("#pet").click(function () {
+      $("#petform").css("visibility", "visible");
+      $("#petownerform").css("visibility", "hidden");
+      console.log("pet!!");
+    });
+  });
+</script>
+{% endif %} {% endblock %}
