@@ -56,7 +56,7 @@
     <p>
       {{i}}{{i.PetAge}}{{i.PetO}} {{i.PetName}}
       <a href="{% url 'updatepet' i.id %}">{{i.PetName}} update</a>
-      {{i.PetName}} delete
+      <a href="{% url 'deletepet' i.id %}">{{i.PetName}} delete</a>
     </p>
     {% endfor %}
     <br />

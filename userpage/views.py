@@ -131,3 +131,12 @@ def UpdatePet(request,id):
 
 
     return render(request,"userpage/updatepet.html",{"form":form})
+
+
+
+
+def DeletePet(request,id):
+#TODO: I WİLL NEW DATAMODELS CLİNT DATAS' CAN DELETE BUT WE  ADD ORTHER DATA MODELS İNTO !!!
+    pet=Pet.objects.get(pk=id)
+    pet.delete()
+    return redirect("main")

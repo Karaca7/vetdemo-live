@@ -9,6 +9,7 @@ urlpatterns = [
         path("addpet/",views.Addpet,name="addpet"),
         path("addpetowner/",views.AddPetOwner,name="addpetowner"),
         path("updatepet/<int:id>",views.UpdatePet,name="updatepet"),
+        path("deletepet/<int:id>",views.DeletePet,name="deletepet")
 
     
     
