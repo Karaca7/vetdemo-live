@@ -32,6 +32,7 @@ def Logouter(request):
     return redirect("indexpage")
 
 
+#TODO:user will be added by query, for all fields !!!!!!!!!!!!!!!!!!!!!!!!!
 def UserCreator(request):
     context=UserCreate()
     if request.POST:
@@ -41,7 +42,11 @@ def UserCreator(request):
             user = user.save(commit=False)
             user.set_password(password)
             user.save()
-            return redirect("main")
+            user=authenticate(request,username=user.username, password=password)
+            if user is not None:
+                login(request,user)
+
+                return redirect("indexpage")
     return render(request,'mainapp/user/usercreate.html',{"context":context})
 
 
