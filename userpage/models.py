@@ -1,3 +1,4 @@
+from distutils.command.upload import upload
 from django.db import models
 
 # Create your models here.
@@ -24,6 +25,7 @@ class Pet(models.Model):
 
     PetName=models.CharField(max_length=20)
     PetAge=models.CharField(max_length=3)
+    PetImage=models.ImageField(upload_to="pets",null=True, blank=True)
     PetType=models.CharField(max_length=20)
     PetExplan=models.TextField()
     PetO=models.ForeignKey(PetOwner, default="",on_delete=models.CASCADE)

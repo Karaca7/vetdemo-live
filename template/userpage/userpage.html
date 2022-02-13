@@ -1,6 +1,7 @@
 {% extends "template.html" %} {% block content %}
 <h1>User Page</h1>
-{% if user.is_authenticated %}
+{% load static %} {% if user.is_authenticated %} welcome :{{user.username}}
+<br />
 <a href="{% url 'indexpage' %}">Main Page</a>
 <br />
 <a href="{% url 'addpet' %}">Add Pet</a>
@@ -39,9 +40,15 @@
   <input type="submit" value="tıkla" />
 </form>
 
-{% for i in context2 %}
+{% for i in context2 %} {% if i.PetImage %}
+
+<img src="{{i.PetImage.url}}" alt="My image" width="100px" height="100px" />
+{% else %}
+<p>No image</p>
+{% endif %}
 <p>
   {{i}}{{i.PetAge}}{{i.PetO}} {{i.PetName}}
+
   <a href="{% url 'updatepet' i.id %}">{{i.PetName}} update</a>
   <a href="{% url 'deletepet' i.id %}">{{i.PetName}} delete</a>
 </p>

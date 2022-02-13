@@ -1,8 +1,8 @@
 {% extends "template.html" %} {% block content %}
 <h1>add pet</h1>
 
-<form action="" method="post">
+<form action="" method="post" enctype="multipart/form-data">
   {% csrf_token %} {{FORM.as_p}}
   <input type="submit" value="tıkla" />
 </form>
-{% endblock %}
+{% endblock %} enctype="multipart/form-data"

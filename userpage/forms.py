@@ -8,7 +8,7 @@ from django import forms
 class PetForm(ModelForm):
     class Meta:
         model=Pet
-        fields=["PetName","PetAge","PetType","PetExplan","PetO"]
+        fields=["PetName","PetAge","PetType","PetExplan","PetO","PetImage"]
         
     
 

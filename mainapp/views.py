@@ -4,12 +4,11 @@ from django.contrib.auth import authenticate,login,logout
 
 from mainapp.forms import UserCreate
 
+from django.contrib.auth.models import User
+
 
 def Indexpage(request):
       return render(request,"mainapp/index.html")
-
-
-
  
 
 def Loginer(request):
@@ -17,9 +16,7 @@ def Loginer(request):
     if request.method=="POST":
         UserName=request.POST.get("username")
         UserPassword=request.POST.get("password")
-       
         user=authenticate(request,username=UserName, password=UserPassword)
-       
         if user is not None:
             login(request,user)
             
@@ -27,7 +24,6 @@ def Loginer(request):
         else:
             return render(request,"mainapp/user/login.html",{"warring":"true"})
    
-
     return render(request,"mainapp/user/login.html")
 
 
@@ -40,10 +36,15 @@ def UserCreator(request):
     context=UserCreate()
     if request.POST:
         user=UserCreate(request.POST)
-        user.save()
-       
-
+        if user.is_valid():
+            password = request.POST.get('password')
+            user = user.save(commit=False)
+            user.set_password(password)
+            user.save()
+            return redirect("main")
     return render(request,'mainapp/user/usercreate.html',{"context":context})
+
+
 
 
     

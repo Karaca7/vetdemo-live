@@ -50,11 +50,14 @@ def Addpet(request):
     form=PetForm()
     
     if(request.method=="POST"):
-           form=PetForm(request.POST)
-           pet = form.save(commit=False)     
-           pet.Vet= request.user
-           pet.save()
-           return redirect("main") 
+        form=PetForm(request.POST,request.FILES)
+        if form.is_valid(): 
+            pet = form.save(commit=False)     
+            pet.Vet= request.user
+            pet.save()
+            return redirect("main") 
+        else:
+            print("......")
            
     return render(request,"userpage/addpet.html",{"FORM":form})
    
