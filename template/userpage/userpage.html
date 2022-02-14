@@ -11,9 +11,9 @@
 <hr />
 <button id="owner">Owner search</button>
 <button id="pet">Pet search</button>
-
+<button><a href="{% url 'main' %}">Return page </a></button>
 <form
-  action=""
+  action="{% url 'main' %}"
   method="post"
   style="visibility: hidden"
   name="petform"
@@ -27,7 +27,7 @@
 </form>
 
 <form
-  action=""
+  action="{% url 'main' %}"
   method="post"
   style="visibility: hidden"
   name="petownerform"
@@ -57,7 +57,26 @@
 {% if warring %}
 
 <p>not found</p>
+
 {% endif%}
+<hr />
+<h1>All pets</h1>
+{% for petspage in context %} {{petspage.PetName}}<br />
+
+<br />
+{% endfor %} {% if context.has_previous %}
+<button>
+  <a href="{% url 'main' %}?page={{context.previous_page_number}}"
+    >previous page</a
+  >
+</button>
+{% endif %}
+<!--  -->
+{% if context.has_next %}
+<button>
+  <a href="{% url 'main' %}?page={{context.next_page_number}}">next page</a>
+</button>
+{% endif %}
 <script>
   $("document").ready(function () {
     $("#owner").click(function () {

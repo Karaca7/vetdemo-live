@@ -1,0 +1,22 @@
+{% extends 'template.html' %} {% block content %}
+
+<h1 class="display-5 fw-bolder text-white mb-2">staff</h1>
+<p class="lead fw-normal text-white-50 mb-4">
+  We will review your registration within 24 hours and confirm your registration
+  if there is no problem.
+</p>
+<ol>
+  {% for uuser in context %}
+
+  <li>
+    <span
+      >{{uuser.username}} | {{uuser.email}}|<button>
+        <a href="{% url 'activator' uuser.id %}">Allow</a>
+      </button>
+    </span>
+  </li>
+
+  {% endfor %}
+</ol>
+
+{% endblock %}

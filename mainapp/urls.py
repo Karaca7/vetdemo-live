@@ -10,8 +10,11 @@ urlpatterns = [
     path("user/",include("userpage.urls")),
     path("login/",views.Loginer,name="llogin"),
     path("logout/",views.Logouter,name="logout"),
-    path("usercreate",views.UserCreator,name="usercreate"),
-    # path("userupadte",views.UserUpdateor,name="userupdate"),
+    path("usercreate/",views.UserCreator,name="usercreate"),
+    path("congratulations/",views.Congratulatory,name="congratulations"),
+    path("staff/",views.Staff,name="staff"),
+    path("activator/<int:id>",views.Activator,name="activator"),
     path('change-password/', auth_views.PasswordChangeView.as_view()),
+    # path("userupadte",views.UserUpdateor,name="userupdate"),
 
 ]
