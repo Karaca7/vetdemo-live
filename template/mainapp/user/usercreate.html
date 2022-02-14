@@ -1,8 +1,18 @@
 {% extends 'template.html' %} {% block content %}
 
-<h1>Lorem, ipsum.</h1>
-<form action="" method="post">
-  {% csrf_token %} {{context.as_p}}
-  <input type="submit" value="click " />
-</form>
+<div class="container">
+  <h1 style="margin-top: 5%">Singup</h1>
+
+  <div style="margin-left: 20%; margin-top: 2%">
+    <form action="" method="post">
+      {% csrf_token %} {{context.as_p}}
+      <input
+        type="submit"
+        value="Click"
+        class="btn btn-outline-dark btn-lg btn-block"
+      />
+    </form>
+  </div>
+</div>
+
 {% endblock %}
