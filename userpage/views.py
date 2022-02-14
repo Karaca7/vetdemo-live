@@ -19,9 +19,9 @@ def Userp(request):
     if request.user.is_authenticated:
    
        
-        if request.method=="POST":
+        if request.method=="POST":# this will be  Get method !!!
            
-            if "petowenname" in request.POST:  # this will be  Get method !!!
+            if "petowenname" in request.POST:  
                  ownername=request.POST.get("petowenname") 
                  try: 
                     owners=  Pet.objects.filter( PetO__Name__contains=ownername ) 

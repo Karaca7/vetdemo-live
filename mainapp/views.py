@@ -67,7 +67,7 @@ def Staff(request):
     else:
         context="bye.."
 
-        return render(request,'mainapp/user/staff.html',{"context":context})
+    return render(request,'mainapp/user/staff.html',{"context":context})
 
 
 def Activator(request,id):
