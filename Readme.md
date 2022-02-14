@@ -4,7 +4,13 @@ This app is django project designed for veterinarians to keep information of pet
 Should expect staff members to check veterinarians' information after registration.
 When Staf activates the vet. They can login and add pet information via dashbord. they can remove it.
 
-Demo Here ! ->
+Demo Here ! -> https://vetdemo.herokuapp.com/
+
+Create a new user and log out and log in with staff user account then go to staff page and confirm your new account
+!!
+staff user:
+username: stafuser
+password: stafuser
 
 ## Folder structure
 
