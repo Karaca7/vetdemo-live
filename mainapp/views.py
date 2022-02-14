@@ -64,6 +64,22 @@ def Staff(request):
     if request.user.is_authenticated:
         Usr = get_user_model()
         context = Usr.objects.filter(is_active=False)
+        if "username" in request.POST:
+                 username=request.POST.get("username")
+               
+                 try:
+                    user=Usr.objects.filter(username=username)
+                    
+                    warring=False
+                    if len(user)==0:
+                        warring=True
+                    
+                    return render(request,"mainapp/user/staff.html",{"context":None,"context2":user,"warring":warring})
+                 except:
+                    return render(request,"mainapp/user/staff.html",{"context":None,})
+
+
+
     else:
         context="bye.."
 
@@ -74,6 +90,13 @@ def Activator(request,id):
     if request.user.is_authenticated:
         user=User.objects.get(pk=id)
         user.is_active=True
+        user.save()
+        return redirect("staff")
+
+def DeActivator(request,id):
+    if request.user.is_authenticated:
+        user=User.objects.get(pk=id)
+        user.is_active=False
         user.save()
         return redirect("staff")
     

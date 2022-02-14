@@ -1,96 +1,152 @@
 {% extends "template.html" %} {% block content %}
-<h1>User Page</h1>
-{% load static %} {% if user.is_authenticated %} welcome :{{user.username}}
-<br />
-<a href="{% url 'indexpage' %}">Main Page</a>
-<br />
-<a href="{% url 'addpet' %}">Add Pet</a>
-<br />
-<a href="{% url 'addpetowner' %}">Add Owner</a>
+<div class="container">
+  <div class="row" style="margin-top: 10%; margin-bottom: 10%">
+    <div class="col-xl-12 mb-3">
+      <h1>User Page</h1>
+      {% load static %} {% if user.is_authenticated %} welcome
+      :{{user.username}}
+      <br />
+    </div>
+    <div class="row">
+      <div class="d-flex flex-row bd-highlight mb-3">
+        <div class="mb-3 p-2 bd-highlight">
+          <a href="{% url 'indexpage' %}">Main Page</a>
+          <br />
+        </div>
+        <div class="mb-3 p-2 bd-highlight">
+          <a href="{% url 'addpet' %}">Add Pet</a>
+          <br />
+        </div>
+        <div class="mb-3 p-2 bd-highlight">
+          <a href="{% url 'addpetowner' %}">Add Owner</a>
+        </div>
+      </div>
+    </div>
 
-<hr />
-<button id="owner">Owner search</button>
-<button id="pet">Pet search</button>
-<button><a href="{% url 'main' %}">Return page </a></button>
-<form
-  action="{% url 'main' %}"
-  method="post"
-  style="visibility: hidden"
-  name="petform"
-  id="petform"
->
-  {% csrf_token %}
+    <hr />
+    <div class="row">
+      <div class="d-flex flex-row bd-highlight">
+        <div class="p-2">
+          <button class="btn btn-outline-dark btn-lg btn-block" id="owner">
+            Owner search
+          </button>
+        </div>
+        <div class="p-2">
+          <button class="btn btn-outline-dark btn-lg btn-block" id="pet">
+            Pet search
+          </button>
+        </div>
+        <div class="p-2">
+          <button class="btn btn-outline-dark btn-lg btn-block">
+            <a href="{% url 'main' %}">Return page </a>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <form
+        action="{% url 'main' %}"
+        method="post"
+        style="visibility: hidden"
+        name="petform"
+        id="petform"
+      >
+        {% csrf_token %}
 
-  <input type="text" name="petname" />
+        <input type="text" name="petname" />
+        <input type="submit" value="tıkla" />
+      </form>
+    </div>
 
-  <input type="submit" value="tıkla" />
-</form>
+    <div class="row">
+      <form
+        action="{% url 'main' %}"
+        method="post"
+        style="visibility: hidden"
+        name="petownerform"
+        id="petownerform"
+      >
+        {% csrf_token %}
 
-<form
-  action="{% url 'main' %}"
-  method="post"
-  style="visibility: hidden"
-  name="petownerform"
-  id="petownerform"
->
-  {% csrf_token %}
+        <input type="text" name="petowenname" />
 
-  <input type="text" name="petowenname" />
+        <input type="submit" value="tıkla" />
+      </form>
+    </div>
+    <div class="text-center">
+      {% for i in context2 %} {% if i.PetImage %}
 
-  <input type="submit" value="tıkla" />
-</form>
+      <img
+        src="{{i.PetImage.url}}"
+        alt="My image"
+        width="100px"
+        height="100px"
+      />
+      {% else %}
+      <p>No image</p>
+      {% endif %}
+      <p>
+        Pet Name: {{i.PetName}} | Owners:{{i.PetO}} | Age:{{i.PetAge}}
 
-{% for i in context2 %} {% if i.PetImage %}
+        <a href="{% url 'updatepet' i.id %}"> update</a>
+        <a href="{% url 'deletepet' i.id %}"> delete</a>
+      </p>
+      {% endfor %}
+      <br />
+      {% if warring %}
 
-<img src="{{i.PetImage.url}}" alt="My image" width="100px" height="100px" />
-{% else %}
-<p>No image</p>
-{% endif %}
-<p>
-  {{i}}{{i.PetAge}}{{i.PetO}} {{i.PetName}}
+      <p>not found</p>
 
-  <a href="{% url 'updatepet' i.id %}">{{i.PetName}} update</a>
-  <a href="{% url 'deletepet' i.id %}">{{i.PetName}} delete</a>
-</p>
-{% endfor %}
-<br />
-{% if warring %}
+      {% endif%}
+    </div>
 
-<p>not found</p>
+    <hr />
+    <h1>All pets</h1>
+    <div class="text-center">
+      {% for petspage in context %} {% if petspage.PetImage %}
 
-{% endif%}
-<hr />
-<h1>All pets</h1>
-{% for petspage in context %} {{petspage.PetName}}<br />
+      <img
+        src="{{petspage.PetImage.url}}"
+        alt="My image"
+        width="100px"
+        height="100px"
+      />
+      {% else %}
+      <p>No image</p>
+      {% endif %}
+      <p>
+        Pet Name: {{petspage.PetName}} | Owners:{{petspage.PetO}} |
+        Age:{{petspage.PetAge}}
 
-<br />
-{% endfor %} {% if context.has_previous %}
-<button>
-  <a href="{% url 'main' %}?page={{context.previous_page_number}}"
-    >previous page</a
-  >
-</button>
-{% endif %}
-<!--  -->
-{% if context.has_next %}
-<button>
-  <a href="{% url 'main' %}?page={{context.next_page_number}}">next page</a>
-</button>
-{% endif %}
-<script>
-  $("document").ready(function () {
-    $("#owner").click(function () {
-      $("#petownerform").css("visibility", "visible");
-      $("#petform").css("visibility", "hidden");
+        <a href="{% url 'updatepet' petspage.id %}"> update</a>
+        <a href="{% url 'deletepet' petspage.id %}"> delete</a>
+      </p>
 
-      console.log("owner!!");
-    });
+      {% endfor %}
+    </div>
+    {% if context.has_previous %}
+    <div style="width: 100%">
+      <div style="float: left">
+        <button class="btn btn-outline-dark">
+          <a href="{% url 'main' %}?page={{context.previous_page_number}}"
+            >previous page</a
+          >
+        </button>
+      </div>
+      {% endif %}
+      <!--  -->
 
-    $("#pet").click(function () {
-      $("#petform").css("visibility", "visible");
-      $("#petownerform").css("visibility", "hidden");
-      console.log("pet!!");
-    });
-  });
-</script>
+      {% if context.has_next %}
+      <div class="px-2" style="float: left">
+        <button class="btn btn-outline-dark">
+          <a href="{% url 'main' %}?page={{context.next_page_number}}"
+            >next page</a
+          >
+        </button>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+<script src="{% static 'js/main.js' %}"></script>
 {% endif %} {% endblock %}

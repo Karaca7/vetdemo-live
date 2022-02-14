@@ -14,6 +14,7 @@ urlpatterns = [
     path("congratulations/",views.Congratulatory,name="congratulations"),
     path("staff/",views.Staff,name="staff"),
     path("activator/<int:id>",views.Activator,name="activator"),
+    path("deactivator/<int:id>",views.DeActivator,name="deactivator"),
     path('change-password/', auth_views.PasswordChangeView.as_view()),
     # path("userupadte",views.UserUpdateor,name="userupdate"),
 

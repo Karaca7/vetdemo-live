@@ -1,22 +1,75 @@
-{% extends 'template.html' %} {% block content %}
+{% extends 'template.html' %} {% block content %} {% load static %}
+<div class="container">
+  <div>
+    <h1 class="display-5 fw-bolder text-black mb-2">Staff Page</h1>
+  </div>
+  <div style="margin-left: 20%; margin-top: 5%">
+    <ol>
+      {% for uuser in context %}
 
-<h1 class="display-5 fw-bolder text-white mb-2">staff</h1>
-<p class="lead fw-normal text-white-50 mb-4">
-  We will review your registration within 24 hours and confirm your registration
-  if there is no problem.
-</p>
-<ol>
-  {% for uuser in context %}
+      <li>
+        <span
+          ><h5 style="display: inline">
+            {{uuser.username}} | {{uuser.email}} |
+          </h5>
+          <button class="btn btn-outline-dark">
+            <a href="{% url 'activator' uuser.id %}">Allow</a>
+          </button>
+        </span>
+      </li>
 
-  <li>
-    <span
-      >{{uuser.username}} | {{uuser.email}}|<button>
-        <a href="{% url 'activator' uuser.id %}">Allow</a>
-      </button>
-    </span>
-  </li>
+      {% endfor %}
+    </ol>
+  </div>
 
-  {% endfor %}
-</ol>
+  <h1>Find User</h1>
+  <div class="row">
+    <div class="d-flex flex-row bd-highlight">
+      <div class="p-2">
+        <button class="btn btn-outline-dark btn-lg btn-block" id="pet">
+          User search
+        </button>
+      </div>
+      <div class="p-2">
+        <button class="btn btn-outline-dark btn-lg btn-block">
+          <a href="{% url 'staff' %}">Return page </a>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="row">
+    <form
+      action="{% url 'staff' %}"
+      method="post"
+      style="visibility: hidden"
+     
+      id="petform"
+    >
+      {% csrf_token %}
+
+      <input type="text" name="username" />
+      <input type="submit" value="tıkla" />
+    </form>
+  </div>
+  <div class="text-center">
+    {% for userr in context2 %} 
+
+    {% if userr.is_superuser %}
+
+    <p>:) .....</p>
+    {% else %}
+  User Name: {{userr.username}} | E-mail: {{userr.email}} |
+
+      <a href="{% url 'deactivator' userr.id %}"> Deactivate</a>
+      
+    </p>
+    {% endif %}
+    {% endfor %}
+  </div>
+
+  <script src="{% static 'js/main.js' %}"></script>
+</div>
 
 {% endblock %}

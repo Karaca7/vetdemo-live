@@ -115,7 +115,10 @@ def UpdatePet(request,id):
 
     if request.user.is_authenticated:
 
-        pet=Pet.objects.get(pk=id)
+        try:
+            pet=Pet.objects.get(pk=id) # todo :will return warring
+        except:
+            return redirect("main")
 
         form=PetForm(instance=pet)
         if request.method=="POST":
@@ -138,6 +141,13 @@ def UpdatePet(request,id):
 def DeletePet(request,id):
 
     if request.user.is_authenticated:
-        pet=Pet.objects.get(pk=id)
-        pet.delete()
+
+        if request.method=="POST":
+            try:
+
+                pet=Pet.objects.get(pk=id)
+                pet.delete()
+            except:
+                redirect("main") # todo : will return warring
+        
     return redirect("main")

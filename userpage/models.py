@@ -32,3 +32,10 @@ class Pet(models.Model):
     Vet=models.ForeignKey(User,default="",on_delete=models.CASCADE)
     def __str__(self):
         return self.PetName
+
+    # def save(self,id,*args,**kwargs,):
+    #     owners=PetOwner.objects.get(pk=id)
+    #     if Pet.objects.filter(PetO=owners).count()<=5:
+    #         super(Pet,self).save(*args,**kwargs)
+    #     else:
+    #         return "YOU DONT NEW RECORD"
