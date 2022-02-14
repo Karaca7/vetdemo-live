@@ -40,7 +40,7 @@ github clone and github download zip
 ## Dependencies Install
 
 ```bash
-pip install django==3.8.2
+pip install django==3.2.8
 
 ```
 
