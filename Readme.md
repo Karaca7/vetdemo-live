@@ -93,14 +93,14 @@ python manage.py test userpage
 
 ```
 
-## for Heroku Deployment
+## For Heroku Deployment
 
 ```python
 
 1-requirements.txt oluştur.
 2-Procfile oluştur -> web: gunicorn vet.wsgi  <settings dosyasının olduğu app>.wsgi
 3-runtime.txt ->python-3.8.8
-
+4-ALLOWED_HOSTS =[]-> your host address and localhost address
 4-settings dosyası:
 Debug=False
 import os
@@ -110,6 +110,23 @@ STATICFILES_DIRS = (
 )
 
 ```
+
+## Next Version
+
+Since I'm thinking of submitting the project, I'm thinking of adding a few missing and missing processes in the next version:
+I forgot pages 1-404
+2-html ,css should be developed
+3-owners detail page
+4-forms clean functions are missing
+5-email password reset
+6- registration with google accounts
+7-login and similar decalators are missing
+
+## For Development
+
+1-Debug=True
+2-ALLOWED_HOSTS=... delete addresses in l.
+3-STATIC_ROOT =comment line
 
 ## Contributing
 
