@@ -113,14 +113,14 @@ STATICFILES_DIRS = (
 
 ## Next Version
 
-Since I'm thinking of submitting the project, I'm thinking of adding a few missing and missing processes in the next version:
-I forgot pages 1-404
-2-html ,css should be developed
-3-owners detail page
-4-forms clean functions are missing
-5-email password reset
-6- registration with google accounts
-7-login and similar decalators are missing
+Since I'm thinking of submitting the project, I'm thinking of adding a few missing and missing processes in the next version:<br>
+I forgot pages 1-404<br>
+2-html ,css should be developed<br>
+3-owners detail page<br>
+4-forms clean functions are missing<br>
+5-email password reset<br>
+6- registration with google accounts<br>
+7-login and similar decalators are missing<br>
 
 ## For Development
 
