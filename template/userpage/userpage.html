@@ -89,7 +89,9 @@
         Pet Name: {{i.PetName}} | Owners:{{i.PetO}} | Age:{{i.PetAge}}
 
         <a href="{% url 'updatepet' i.id %}"> update</a>
+        {% if user.is_staff %}
         <a href="{% url 'deletepet' i.id %}"> delete</a>
+        {% endif %}
       </p>
       {% endfor %}
       <br />
@@ -119,7 +121,9 @@
         Age:{{petspage.PetAge}}
 
         <a href="{% url 'updatepet' petspage.id %}"> update</a>
+        {% if user.is_staff %}
         <a href="{% url 'deletepet' petspage.id %}"> delete</a>
+        {% endif %}
       </p>
 
       {% endfor %}

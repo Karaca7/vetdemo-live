@@ -74,6 +74,10 @@ whitenoise==6.0.0
 
 ```
 
+## CDN Dependencies :
+
+bootstrap5 and jquery
+
 and running
 
 ````
