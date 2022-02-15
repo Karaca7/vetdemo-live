@@ -9,8 +9,8 @@ Demo Here ! -> https://vetdemo.herokuapp.com/
 Create a new user and log out and log in with staff user account then go to staff page and confirm your new account
 !!
 staff user:<br>
-username: stafuser<br>
-password: stafuser
+username: staffuser<br>
+password: staffuser
 
 ## Folder structure
 
