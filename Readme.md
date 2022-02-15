@@ -124,9 +124,9 @@ I forgot pages 1-404<br>
 
 ## For Development
 
-1-Debug=True
-2-ALLOWED_HOSTS=... delete addresses in l.
-3-STATIC_ROOT =comment line
+1-Debug=True<br>
+2-ALLOWED_HOSTS=... delete addresses in l.<br>
+3-STATIC_ROOT =comment line<br>
 
 ## Contributing
 
