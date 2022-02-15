@@ -16,7 +16,7 @@ class PetForm(ModelForm):
     def clean(self):
          owner=self.cleaned_data.get('PetO')
          if Pet.objects.filter(PetO=owner).count()>20:
-              raise ValidationError('Draft entries may not have a publication date.')
+              raise ValidationError('You cannot save any more.')
              
     
 
