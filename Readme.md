@@ -1,4 +1,4 @@
-# Vet.com Demo My Challenge
+# Vetchallenge.com Demo My Challenge
 
 This app is django project designed for veterinarians to keep information of pets.
 Should expect staff members to check veterinarians' information after registration.
