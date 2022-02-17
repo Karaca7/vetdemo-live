@@ -1,10 +1,8 @@
-from queue import Empty
-from tokenize import Name
-from django.shortcuts import redirect, render ,HttpResponse
-from sqlalchemy import null
+
+from django.shortcuts import redirect, render 
 
 from userpage.forms import PetForm,PetOwnerForm
-from django.contrib.auth.models import User
+
 
 from userpage.models import Pet,PetOwner
 
@@ -12,116 +10,144 @@ from userpage.models import Pet,PetOwner
 from django.core.paginator import Paginator,EmptyPage
 # Create your views here.
 
+from django.views.generic import View
 
 
 
-def Userp(request):
-    if request.user.is_authenticated:
+class UserPageView(View):
    
-       
-        if request.method=="POST":# this will be  Get method !!!
+
+    def get(self,request):
+        if request.user.is_authenticated:
            
+            context=Pet.objects.all()
+            p=Paginator(context,2)
+            page_num=request.GET.get('page',1)
+            try:
+                page=p.page(page_num)
+            except EmptyPage:
+                page=p.page(1)
+                
+            context=page
+
+            return render(request,"userpage/userpage.html",{"context":context})
+        else:
+            return redirect("indexpage")
+
+    def post(self,request):
+        if request.user.is_authenticated:
+                
             if "petowenname" in request.POST:  
-                 ownername=request.POST.get("petowenname") 
-                 try: 
-                    owners=  Pet.objects.filter( PetO__Name__contains=ownername ) 
-                    warring=False
-                    if len(owners)==0:
-                        warring=True
+                    ownername=request.POST.get("petowenname") 
+                    try: 
+                        owners=  Pet.objects.filter( PetO__Name__contains=ownername ) 
 
-
-                    
-                  
-                    return render(request,"userpage/userpage.html",{"context":None,"context2":owners,"warring":warring})
-                 except:
-                    return render(request,"userpage/userpage.html",{"context":None,"warring":True})
+                        warring=False
+                        if not owners:
+                            warring=True
+         
+                        return render(request,"userpage/userpage.html",{"context":None,"context2":owners,"warring":warring})
+                    except:
+                        return render(request,"userpage/userpage.html",{"context":None,"warring":True})
 
             if "petname" in request.POST:
-                 petname=request.POST.get("petname")
-               
-                 try:
-                    pets=Pet.objects.filter(PetName=petname)
-                    
-                    warring=False
-                    if len(pets)==0:
-                        warring=True
-                    
-                    return render(request,"userpage/userpage.html",{"context":None,"context2":pets,"warring":warring})
-                 except:
-                    return render(request,"userpage/userpage.html",{"context":None,})
-    else:
-         return redirect("indexpage")
-    
-    if request.method=="GET":
-        context=Pet.objects.all()
-        p=Paginator(context,2)
-        page_num=request.GET.get('page',1)
-        try:
-            page=p.page(page_num)
-        except EmptyPage:
-            page=p.page(1)
-            
-        context=page
+                    petname=request.POST.get("petname")
+                
+                    try:
+                        pets=Pet.objects.filter(PetName=petname)
+                        
+                        warring=False
+                        if not pets:
+                            print("buraas")
+                            warring=True
+                        
+                        return render(request,"userpage/userpage.html",{"context":None,"context2":pets,"warring":warring})
+                    except:
+                        return render(request,"userpage/userpage.html",{"context":None,})
 
-        return render(request,"userpage/userpage.html",{"context":context})
-    return render(request,"userpage/userpage.html")
-   
-
-
-def Addpet(request):
-
-    if request.user.is_authenticated:
-        form=PetForm()
-        
-        if(request.method=="POST"):
-            form=PetForm(request.POST,request.FILES)
-            if form.is_valid(): 
-                pet = form.save(commit=False)     
-                pet.Vet= request.user
-                pet.save()
-                return redirect("main") 
             else:
-                print("......")
-    else:
-        form="bye..."
-            
-    return render(request,"userpage/addpet.html",{"FORM":form})
+                return redirect("indexpage")
+                    
+
+
+
+class AddPetView(View):
+    template_name="userpage/addpet.html"
+    form_class= PetForm
+
    
-    
-    
-
-
-def AddPetOwner(request):
-
-    if request.user.is_authenticated:
-        form=PetOwnerForm()
+    def get(self,request):
+        if request.user.is_authenticated:
+            context={"FORM":self.form_class}
+            return render(request,self.template_name,context)
+        else:
+            return redirect("indexpage")
         
-        if(request.method=="POST"):
-            form=PetOwnerForm(request.POST)
+    def post(self,request):
+
+        if request.user.is_authenticated:
+            form=self.form_class(request.POST,request.FILES)
+            if form.is_valid(): 
+                    pet = form.save(commit=False)     
+                    pet.Vet= request.user
+                    pet.save()
+                    return redirect("main") 
+           
+        else:
+            return redirect("indexpage")
+        
+       
+
+
+class AddPetOwnerView(View):
+    
+    template_name="userpage/addpetowner.html"
+    form_class=PetOwnerForm
+
+    def get(self,request):
+        if request.user.is_authenticated:
+            return render(request,self.template_name,{"FORM":self.form_class})
+        else:
+            return redirect("indexpage")
+
+    def post(self,request):
+        if request.user.is_authenticated:
+            form=self.form_class(request.POST)
             owner=form.save(commit=False)
             owner.Vet=request.user
             owner.save()
             return redirect("main")
-    else:
-        form="bye..."    
-           
-    return render(request,"userpage/addpetowner.html",{"FORM":form})
+
+        else:
+            return redirect("indexpage")
 
 
+class UpdatePetView(View):
+    template_name="userpage/updatepet.html"
 
+    def get(self,request,id):
+        if request.user.is_authenticated:
+            try:
+                pet=Pet.objects.get(pk=id) # todo :will return warring get_object_or_404() --- ı will use
+            except:
+                return redirect("main")
 
+            form=PetForm(instance=pet)
+            pet=Pet.objects.get(pk=id)
+            return render(request,"userpage/updatepet.html",{"form":form})
+        else:
+            return redirect("indexpage")
 
-def UpdatePet(request,id):
-
-    if request.user.is_authenticated:
-
-        try:
-            pet=Pet.objects.get(pk=id) # todo :will return warring
-        except:
-            return redirect("main")
-
-        form=PetForm(instance=pet)
-        if request.method=="POST":
+      
+    def post(self,request,id):
+        if request.user.is_authenticated:
+            try:
+                pet=Pet.objects.get(pk=id) # todo :will return warring get_object_or_404() --- ı will use
+            except:
+                return redirect("main")
+            
+            form=PetForm(instance=pet)
+            pet=Pet.objects.get(pk=id)
             pet=Pet.objects.get(pk=id)
             pet.PetName=request.POST.get("PetName")
             pet.PetAge=request.POST.get("PetAge")
@@ -130,9 +156,9 @@ def UpdatePet(request,id):
             pet.PetO=changedPetowner
             pet.save()
             return redirect("main")
-    else:
-        form="bye..."   
-    return render(request,"userpage/updatepet.html",{"form":form})
+        else:
+            return redirect("indexpage")
+        
 
 
 
@@ -141,13 +167,15 @@ def UpdatePet(request,id):
 def DeletePet(request,id):
 
     if request.user.is_authenticated:
+        print("delete")
 
-        if request.method=="POST":
-            try:
+        
+        try:
 
-                pet=Pet.objects.get(pk=id)
-                pet.delete()
-            except:
-                redirect("main") # todo : will return warring
+            pet=Pet.objects.get(pk=id)
+            pet.delete()
+        except:
+            redirect("main") # todo : will return warring
         
     return redirect("main")
+
